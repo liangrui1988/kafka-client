@@ -13,6 +13,9 @@ import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
 import org.junit.Test;
 
+import com.client.kafka.builder.ConsumerBuilder;
+import com.client.kafka.builder.ProducerBuilder;
+
 public class TestA {
 
 	public TestA() {
@@ -20,6 +23,14 @@ public class TestA {
 	}
 
 	public static void main(String[] args) {
+		
+		KafkaConsumer<String, String> c=new ConsumerBuilder().groupId("t1").kafkaConsumerBuilder();
+		
+		System.out.println(c);
+	}
+
+	@Test
+	public void test1() {
 		Properties props = new Properties();
 		props.put("bootstrap.servers", "192.168.20.243:9092");
 		props.put("group.id", "test");
@@ -31,7 +42,28 @@ public class TestA {
 		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 		consumer.subscribe(Arrays.asList("foo", "bar"));
 		while (true) {
-			ConsumerRecords<String, String> records = consumer.poll(100);//“long poll”进行阻塞，直到数据到达（并且设置等待时间的好处是可以积累消息，组成大数据块一并发送）。
+			ConsumerRecords<String, String> records = consumer.poll(100);// “long
+																			// poll”进行阻塞，直到数据到达（并且设置等待时间的好处是可以积累消息，组成大数据块一并发送）。
+			int i = 0;
+			for (ConsumerRecord<String, String> record : records) {
+				i++;
+				System.out.printf(i + ":offset = %d, key = %s, value = %s%n", record.offset(), record.key(),
+						record.value());
+
+			}
+		}
+	}
+
+	@Test
+	public void utilsTest() {
+
+		KafkaConsumer<String, String> consumer = new ConsumerBuilder().kafkaConsumerBuilder();
+
+//		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+		consumer.subscribe(Arrays.asList("foo", "bar"));
+		while (true) {
+			ConsumerRecords<String, String> records = consumer.poll(100);// “long
+																			// poll”进行阻塞，直到数据到达（并且设置等待时间的好处是可以积累消息，组成大数据块一并发送）。
 			int i = 0;
 			for (ConsumerRecord<String, String> record : records) {
 				i++;

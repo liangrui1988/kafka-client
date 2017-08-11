@@ -12,6 +12,9 @@ import org.apache.kafka.common.errors.ProducerFencedException;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.Test;
 
+import com.client.kafka.KafkaClientUtils;
+import com.client.kafka.builder.ProducerBuilder;
+
 public class ProducerTest {
 
 	public ProducerTest() {
@@ -42,6 +45,20 @@ public class ProducerTest {
 	}
 
 	@Test
+	public void testUtil() {
+//		Producer<String, String> producer = KafkaClientUtils.getProducer();
+//		producer.send(new ProducerRecord<String, String>("test3", "msg-key", "msg-v"));
+//		producer.close();
+//		Properties properties=KafkaClientUtils.getDefultProperties();
+//		properties.put("bootstrap.servers", "192.168.20.243:9093");
+//		Producer<String, String> producer2 = KafkaClientUtils.getProducer();
+		
+		Producer<String, String> producer3 =new ProducerBuilder().kafkaProducerBuilder();
+		producer3.send(new ProducerRecord<String, String>("test", "msg-key", "msg-ProducerBuilder"));
+		producer3.close();
+	}
+
+	@Test
 	public void testAdd() {
 		Properties props = new Properties();
 		props.put("bootstrap.servers", "192.168.20.243:9092");
@@ -58,7 +75,8 @@ public class ProducerTest {
 
 		for (int i = 0; i < 200; i++) {
 			producer.send(new ProducerRecord<String, String>("bar", Integer.toString(i), Integer.toString(i)));
-//			producer.send(new ProducerRecord<String, String>("bar", Integer.toString(i), Integer.toString(i)));
+			// producer.send(new ProducerRecord<String, String>("bar",
+			// Integer.toString(i), Integer.toString(i)));
 
 		}
 
