@@ -16,9 +16,9 @@ import org.junit.Test;
 import com.client.kafka.builder.ConsumerBuilder;
 import com.client.kafka.builder.ProducerBuilder;
 
-public class TestA {
+public class ConsumerTest {
 
-	public TestA() {
+	public ConsumerTest() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -56,10 +56,7 @@ public class TestA {
 
 	@Test
 	public void utilsTest() {
-
-		KafkaConsumer<String, String> consumer = new ConsumerBuilder().kafkaConsumerBuilder();
-
-//		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+		KafkaConsumer<String, String> consumer = new ConsumerBuilder().groupId("test").kafkaConsumerBuilder();
 		consumer.subscribe(Arrays.asList("foo", "bar"));
 		while (true) {
 			ConsumerRecords<String, String> records = consumer.poll(100);// “long

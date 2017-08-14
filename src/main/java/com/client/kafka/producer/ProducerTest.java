@@ -12,7 +12,6 @@ import org.apache.kafka.common.errors.ProducerFencedException;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.Test;
 
-import com.client.kafka.KafkaClientUtils;
 import com.client.kafka.builder.ProducerBuilder;
 
 public class ProducerTest {
