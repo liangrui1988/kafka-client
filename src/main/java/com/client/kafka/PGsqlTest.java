@@ -22,9 +22,9 @@ public class PGsqlTest {
 	public void flumeTest() {
 		System.out.println("发送kafka........");
 		Producer<String, String> producer3 = new ProducerBuilder().kafkaProducerBuilder();
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 100000; i++) {
 			String json = "{\"file\":\"tk1\",\"size\":\"test\"}";
-			producer3.send(new ProducerRecord<String, String>("logtest", "k-1", json));
+			producer3.send(new ProducerRecord<String, String>("testlog", "k-s", json));
 		}
 		producer3.close();
 	}
