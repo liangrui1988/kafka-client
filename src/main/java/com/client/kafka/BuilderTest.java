@@ -60,7 +60,6 @@ public class BuilderTest {
 		consumer.subscribe(Arrays.asList("foo", "bar"));
 		while (true) {
 			ConsumerRecords<String, String> records = consumer.poll(100);// “long
-																			// poll”进行阻塞，直到数据到达（并且设置等待时间的好处是可以积累消息，组成大数据块一并发送）。
 			int i = 0;
 			for (ConsumerRecord<String, String> record : records) {
 				i++;

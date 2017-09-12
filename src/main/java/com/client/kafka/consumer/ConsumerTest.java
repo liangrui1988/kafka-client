@@ -70,6 +70,40 @@ public class ConsumerTest {
 			}
 		}
 	}
+	
+	@Test
+	public void testTmp() {
+		KafkaConsumer<String, String> consumer = new ConsumerBuilder().valueDeserializer("org.apache.kafka.common.serialization.StringDeserializer").groupId("test1").kafkaConsumerBuilder();
+		consumer.subscribe(Arrays.asList("streams-wordcount-Counts-repartition"));
+		while (true) {
+			ConsumerRecords<String, String> records = consumer.poll(100);// “long
+																			// poll”进行阻塞，直到数据到达（并且设置等待时间的好处是可以积累消息，组成大数据块一并发送）。
+			int i = 0;
+			for (ConsumerRecord<String, String> record : records) {
+				i++;
+				System.out.printf(i + ":offset = %d, key = %s, value = %s%n", record.offset(), record.key(),
+						record.value());
+
+			}
+		}
+	}
+	@Test
+	public void testTmp2() {
+		KafkaConsumer<String, String> consumer = new ConsumerBuilder().valueDeserializer("org.apache.kafka.common.serialization.LongDeserializer").groupId("test1").kafkaConsumerBuilder();
+		consumer.subscribe(Arrays.asList("md-streams-wordcount-output"));
+		while (true) {
+			ConsumerRecords<String, String> records = consumer.poll(100);// “long
+																			// poll”进行阻塞，直到数据到达（并且设置等待时间的好处是可以积累消息，组成大数据块一并发送）。
+			int i = 0;
+			for (ConsumerRecord<String, String> record : records) {
+				i++;
+				System.out.printf(i + "wordcount:offset = %d, key = %s, value = %s%n", record.offset(), record.key(),
+						record.value());
+
+			}
+		}
+	}
+	
 
 	/**
 	 * 用户不依赖于使用者定期提交消费补偿，也可以在记录应该被视为消费时控制，从而提交他们的偏移量。当消息的消费与某些处理逻辑耦合在一起时，这是有用的，

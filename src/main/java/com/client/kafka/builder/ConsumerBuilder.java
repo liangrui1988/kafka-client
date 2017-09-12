@@ -58,7 +58,7 @@ public class ConsumerBuilder {
 		props.put("enable.auto.commit", this.enableAutoCommit);
 		props.put("auto.commit.interval.ms", this.autoCommitIntervalMs);
 		props.put("key.deserializer", this.keyDeserializer);
-		props.put("value.deserializer", this.keyDeserializer);
+		props.put("value.deserializer", this.valueDeserializer);
 		return new KafkaConsumer<>(props);
 	}
 
